@@ -1,0 +1,8 @@
+{
+  "commands.disenchant.success.single": "Removed enchantment %s on %s's item",
+  "commands.disenchant.success.multiple": "Removed enchantment %s on %s entities",
+  "commands.disenchant.failed": "Nothing changed. Targets either have no item in their hands or the enchantment could not be removed",
+  "commands.disenchant.failed.entity": "%s is not a valid entity for this command",
+  "commands.disenchant.failed.itemless": "%s is not holding any item",
+  "enchantment.level.-1": ""
+}

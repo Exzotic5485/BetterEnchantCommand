@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "betterenchantcommand",
+  "version": "${version}",
+
+  "name": "Better Enchant Command",
+  "description": "Allows the /enchant command to have no level limit, applying enchantments that werent compatible and adding a new /disenchant command.",
+  "authors": [
+    "Exzotic"
+  ],
+  "contact": {
+    "homepage": "https://exzotic.xyz",
+    "sources": "https://github.com/Exzotic5485/BetterEnchantCommand"
+  },
+
+  "license": "MIT",
+  "icon": "assets/betterenchantcommand/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "xyz.exzotic.betterenchantcommand.BetterEnchantCommand"
+    ],
+    "preLaunch": [
+      "com.llamalad7.mixinextras.MixinExtrasBootstrap::init"
+    ]
+  },
+  "mixins": [
+    "betterenchantcommand.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.11",
+    "fabric-api": "*",
+    "minecraft": "~1.19.3",
+    "java": ">=17"
+  }
+}
