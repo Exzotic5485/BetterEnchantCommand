@@ -1,9 +1,17 @@
-# Fabric Example Mod
 
-## Setup
+# Better Enchant Command
 
-For setup instructions please see the [fabric wiki page](https://fabricmc.net/wiki/tutorial:setup) that relates to the IDE that you are using.
+This mod improves the vanilla /enchant command so you can enchant without any level limits or enchant compatibility issues. It also adds a new /disenchant command for you to easily disenchant items.
 
-## License
 
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+
+## Commands
+
+- /enchant \<targets> \<enchantment> [\<level>] [\<slot>]
+- /disenchant \<targets> \<enchantment> [\<level | slot>] [\<level | slot>]
+
+
+## Download
+
+[Curseforge](https://www.curseforge.com/minecraft/mc-mods/better-enchant-command)  
+[Modrinth](https://www.curseforge.com/minecraft/mc-mods/better-enchant-command)
