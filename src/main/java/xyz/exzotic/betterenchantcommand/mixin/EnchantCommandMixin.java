@@ -6,19 +6,18 @@ import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import net.minecraft.command.argument.EnchantmentArgumentType;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.ItemSlotArgumentType;
-import net.minecraft.command.argument.RegistryEntryArgumentType;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.EnchantCommand;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -39,9 +38,7 @@ public class EnchantCommandMixin {
     @Shadow
     private static SimpleCommandExceptionType FAILED_EXCEPTION;
 
-    private static int executeSlotEnchant(ServerCommandSource source, Collection<? extends Entity> targets, RegistryEntry<Enchantment> enchantment, int level, int slot) throws CommandSyntaxException {
-        Enchantment enchantment2 = enchantment.value();
-
+    private static int executeSlotEnchant(ServerCommandSource source, Collection<? extends Entity> targets, Enchantment enchantment, int level, int slot) throws CommandSyntaxException {
         int i = 0;
         Iterator var6 = targets.iterator();
 
@@ -53,7 +50,7 @@ public class EnchantCommandMixin {
                 if (stackReference != StackReference.EMPTY) {
                     ItemStack itemStack = stackReference.get();
 
-                    itemStack.addEnchantment(enchantment2, level);
+                    itemStack.addEnchantment(enchantment, level);
                     ++i;
                 } else if (targets.size() == 1) {
                     throw FAILED_ITEMLESS_EXCEPTION.create(livingEntity.getName().getString());
@@ -68,9 +65,9 @@ public class EnchantCommandMixin {
         }
 
         if (targets.size() == 1) {
-            source.sendFeedback(Text.translatable("commands.enchant.success.single", new Object[]{enchantment2.getName(level), ((Entity) targets.iterator().next()).getDisplayName()}), true);
+            source.sendFeedback(new TranslatableText("commands.enchant.success.single", new Object[]{enchantment.getName(level), ((Entity) targets.iterator().next()).getDisplayName()}), true);
         } else {
-            source.sendFeedback(Text.translatable("commands.enchant.success.multiple", new Object[]{enchantment2.getName(level), targets.size()}), true);
+            source.sendFeedback(new TranslatableText("commands.enchant.success.multiple", new Object[]{enchantment.getName(level), targets.size()}), true);
         }
 
         return i;
@@ -84,7 +81,7 @@ public class EnchantCommandMixin {
         }
 
         return argumentBuilder.then(CommandManager.argument("slot", ItemSlotArgumentType.itemSlot()).executes((context) -> {
-            return executeSlotEnchant((ServerCommandSource) context.getSource(), EntityArgumentType.getEntities(context, "targets"), RegistryEntryArgumentType.getEnchantment(context, "enchantment"), IntegerArgumentType.getInteger(context, "level"), ItemSlotArgumentType.getItemSlot(context, "slot"));
+            return executeSlotEnchant((ServerCommandSource) context.getSource(), EntityArgumentType.getEntities(context, "targets"), EnchantmentArgumentType.getEnchantment(context, "enchantment"), IntegerArgumentType.getInteger(context, "level"), ItemSlotArgumentType.getItemSlot(context, "slot"));
         }));
     }
 

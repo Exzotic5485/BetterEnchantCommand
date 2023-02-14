@@ -1,7 +1,7 @@
 package xyz.exzotic.betterenchantcommand;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xyz.exzotic.betterenchantcommand.command.DisenchantCommand;
@@ -15,8 +15,8 @@ public class BetterEnchantCommand implements ModInitializer {
 	public void onInitialize() {
 		LOGGER.info("Better Enchant Command loaded");
 
-		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-			DisenchantCommand.register(dispatcher, registryAccess);
+		CommandRegistrationCallback.EVENT.register((dispatcher, other) -> {
+			DisenchantCommand.register(dispatcher);
 		});
 	}
 }
